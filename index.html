@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>A Lenda do Mestre</title>
     
-    <!-- Link do Favicon -->
     <link rel="icon" href="favicon.png" type="image/png">
     
     <style>
@@ -30,7 +29,7 @@
             --dirt: #c08d5b;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; font-family: inherit; }
         
         /* Fundo Gramado Animado e Escuro Fixo */
         body {
@@ -314,7 +313,7 @@
         .stat-bar-fill { height: 100%; background: var(--text-green); transition: width 1s; }
 
         /* =========================================
-           CAIXA DE TEXTO POKÉMON
+           CAIXA DE DIÁLOGO POKÉMON
         ========================================= */
         #pokemon-dialogue {
             position: absolute; 
@@ -330,6 +329,39 @@
         #pokemon-text {
             font-size: 18px; font-family: var(--font-body); color: var(--text-main); 
             text-shadow: 2px 2px 0 #000; margin: 0; line-height: 1.4;
+        }
+
+        /* =========================================
+           ESTILOS DO MINIJOGO TERMOO
+        ========================================= */
+        .termoo-container {
+            display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 15px;
+        }
+        .termoo-grid {
+            display: flex; flex-direction: column; gap: 5px;
+        }
+        .termoo-row {
+            display: flex; gap: 5px; justify-content: center;
+        }
+        .termoo-cell {
+            width: 40px; height: 40px; border: 3px solid white; background: rgba(0,0,0,0.5);
+            font-family: var(--font-title); font-size: 12px; color: white; text-align: center;
+            line-height: 34px; text-transform: uppercase;
+        }
+        .termoo-cell.correct { background-color: var(--text-green); border-color: #27ae60; }
+        .termoo-cell.present { background-color: var(--text-gold); border-color: #d35400; color: black; }
+        .termoo-cell.absent { background-color: #555; border-color: #333; }
+        
+        .termoo-input-area {
+            display: flex; gap: 10px; margin-top: 10px; width: 100%; max-width: 300px;
+        }
+        .termoo-input {
+            flex-grow: 1; background: black; border: 2px solid white; color: var(--text-gold);
+            font-family: var(--font-body); font-size: 20px; text-align: center; padding: 5px; text-transform: uppercase;
+        }
+        .termoo-btn {
+            background: var(--text-gold); border: 2px solid white; color: black;
+            font-family: var(--font-title); font-size: 10px; padding: 5px 15px; cursor: pointer;
         }
 
         /* =========================================
@@ -353,7 +385,7 @@
         .helper-text {
             position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.6); padding: 8px 12px;
             font-size: 18px; color: white; border: 2px solid white; text-shadow: 1px 1px 0 #000;
-            transition: opacity 0.5s ease-out; /* Transição suave para sumir */
+            transition: opacity 0.5s ease-out; 
         }
         
         .controls-mobile {
@@ -385,12 +417,6 @@
     <div class="scanlines"></div>
     <div id="transition-overlay"></div>
 
-    <!-- MÚSICA DE FUNDO -->
-    <audio id="bg-music" loop>
-        <source src="trilha.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- TELA DE ABERTURA -->
     <div id="title-screen">
         <div class="title-container">
             <div class="crown-icon">👑</div>
@@ -400,11 +426,9 @@
         <button id="start-btn" class="blink-btn">PRESS START</button>
     </div>
 
-    <!-- O JOGO -->
     <div id="viewport">
         <div id="world">
             
-            <!-- TRILHA LÓGICA -->
             <div class="dirt-path" style="top: 1300px; left: 150px; width: 1050px; height: 60px;"></div>
             <div class="dirt-path" style="top: 800px; left: 1140px; width: 60px; height: 500px;"></div>
             <div class="dirt-path" style="top: 800px; left: 350px; width: 850px; height: 60px;"></div>
@@ -413,7 +437,6 @@
             <div class="dirt-path" style="top: 150px; left: 1140px; width: 60px; height: 300px;"></div>
             <div class="dirt-path" style="top: 150px; left: 750px; width: 400px; height: 60px;"></div>
 
-            <!-- PONTOS DE INTERESSE -->
             <div class="poi" id="poi-1" style="top: 1210px; left: 250px; width: 80px; height: 80px;" data-id="intro">
                 <div class="poi-label">Origem</div><div class="poi-sprite">🏠</div>
             </div>
@@ -436,7 +459,6 @@
                 <div class="poi-label">Castelo Final</div><div class="poi-sprite">🏰</div>
             </div>
 
-            <!-- NPCs NO CASTELO FINAL -->
             <div id="npc-girl">
                 <div class="girl-hair"></div>
                 <div class="girl-head">
@@ -455,7 +477,6 @@
                 </div>
             </div>
 
-            <!-- PLAYER -->
             <div id="player" style="top: 1315px; left: 160px;">
                 <div class="sprite-head"><div class="sprite-glasses"></div></div>
                 <div class="sprite-body"></div>
@@ -466,20 +487,17 @@
             <div id="decor-container"></div>
         </div>
 
-        <!-- UI DO SISTEMA -->
         <div id="ui-layer">
             <div class="helper-text" id="help-box">
                 <span id="instruction-txt">Mova com WASD ou Setas</span><br>
                 <span id="sub-instruction-txt" style="font-size:14px; color:var(--text-gold);">Siga a trilha!</span>
             </div>
             
-            <!-- BOTÕES SUPERIORES ESQUERDOS -->
             <div class="top-buttons">
                 <button id="btn-mute">🔊</button>
                 <button id="btn-home">X SAIR</button>
             </div>
 
-            <!-- Caixa de Diálogo Pokémon -->
             <div id="pokemon-dialogue">
                 <p id="pokemon-text"></p>
                 <div style="position: absolute; bottom: 10px; right: 15px; font-size: 14px; animation: bounce 1s infinite alternate;">▼</div>
@@ -496,7 +514,6 @@
             </div>
         </div>
 
-        <!-- MODAL (CAIXA DE TEXTO RPG) -->
         <div id="modal-overlay">
             <div class="rpg-box">
                 <h1 id="modal-title">Título</h1>
@@ -508,15 +525,51 @@
 
     <script>
         /* =========================================
-           SISTEMA DE ÁUDIO 8-BIT
+           SISTEMA DE ÁUDIO 8-BIT NATIVO (TRILHA ÉPICA)
         ========================================= */
-        const bgMusic = document.getElementById('bg-music');
         const btnMute = document.getElementById('btn-mute');
-        
         let isMuted = false;
-        bgMusic.volume = 0.2;
-
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        let musicInterval;
+        let noteIndex = 0;
+
+        const epicMelody = [
+            440, 440, 440, 440, 523, 587, 659, 659, 
+            587, 523, 587, 659, 440, 440, 392, 440,
+            587, 587, 587, 698, 784, 880, 880, 784,
+            698, 784, 880, 523, 523, 587, 659, 659
+        ];
+
+        function playTrackNote() {
+            if (isMuted || audioCtx.state === 'suspended') return;
+            
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.type = 'triangle'; 
+            osc.frequency.setValueAtTime(epicMelody[noteIndex], audioCtx.currentTime);
+            
+            gainNode.gain.setValueAtTime(0.06, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.25);
+            
+            noteIndex = (noteIndex + 1) % epicMelody.length;
+        }
+
+        function startEpicMusic() {
+            if(musicInterval) clearInterval(musicInterval);
+            musicInterval = setInterval(playTrackNote, 220); 
+        }
+
+        function stopEpicMusic() {
+            clearInterval(musicInterval);
+        }
 
         function play8BitSFX(type) {
             if(isMuted) return;
@@ -555,19 +608,20 @@
                 gainNode.gain.linearRampToValueAtTime(0, now + 0.5);
                 osc.start(now);
                 osc.stop(now + 0.5);
-            } else if (type === 'frog') {
-                osc.frequency.setValueAtTime(200, now);
-                osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
-                gainNode.gain.setValueAtTime(0.1, now);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+            } else if (type === 'victory') {
+                osc.frequency.setValueAtTime(523, now);
+                osc.frequency.setValueAtTime(659, now + 0.1);
+                osc.frequency.setValueAtTime(784, now + 0.2);
+                osc.frequency.setValueAtTime(1046, now + 0.3);
+                gainNode.gain.setValueAtTime(0.08, now);
+                gainNode.gain.linearRampToValueAtTime(0, now + 0.6);
                 osc.start(now);
-                osc.stop(now + 0.1);
+                osc.stop(now + 0.6);
             }
         }
 
         btnMute.addEventListener('click', () => {
             isMuted = !isMuted;
-            bgMusic.muted = isMuted;
             btnMute.innerText = isMuted ? '🔇' : '🔊';
             play8BitSFX('click'); 
         });
@@ -595,12 +649,10 @@
                 setTimeout(() => {
                     titleScreen.style.display = 'none';
                     viewport.style.display = 'block';
-                    helpBox.style.opacity = '1'; // Garante que a ajuda aparece ao iniciar
-                    hasPassedOrigens = false;   // Reinicia a checagem
+                    helpBox.style.opacity = '1'; 
+                    hasPassedOrigens = false;   
                     
-                    startBtn.style.animation = "blinker 1.5s linear infinite steps(2)";
-                    
-                    if(!isMuted) bgMusic.play().catch(e => console.log(e));
+                    startEpicMusic();
                     requestAnimationFrame(gameLoop);
                     
                     setTimeout(() => {
@@ -615,12 +667,11 @@
             play8BitSFX('click');
             transitionOverlay.style.opacity = '1';
             hideDialogue();
+            stopEpicMusic();
             
             setTimeout(() => {
                 viewport.style.display = 'none';
                 titleScreen.style.display = 'flex';
-                bgMusic.pause();
-                bgMusic.currentTime = 0;
                 
                 pX = 160; pY = 1315;
                 player.style.left = pX + 'px'; player.style.top = pY + 'px';
@@ -649,12 +700,6 @@
             play8BitSFX('click');
             el.classList.toggle('used');
         };
-
-        document.addEventListener('click', function(e) {
-            if(e.target.closest('.polaroid-card')) {
-                play8BitSFX('click');
-            }
-        });
 
         const gameData = {
             intro: {
@@ -782,22 +827,115 @@
                 `
             },
             epilogue: {
-                title: "EPÍLOGO - GAME CLEARED",
-                popup: "O Castelo Final! Sua Player 2 está te esperando... [AÇÃO]",
+                title: "DESAFIO DO CASTELO FINAL",
+                popup: "O Castelo Final exige uma senha mágica para abrir! [AÇÃO]",
                 html: `
-                    <div style="display:flex; justify-content:center; margin-bottom: 20px;">
-                        <div class="polaroid-card" style="width: 220px;">
-                            <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=400&auto=format&fit=crop" alt="Foto do Casal">
-                            <p>Eu & Você ❤️</p>
+                    <p style="text-align:center; font-size:18px;">Decifre a palavra secreta de 4 letras para desbloquear o Epílogo!</p>
+                    <div class="termoo-container">
+                        <div class="termoo-grid" id="termoo-board"></div>
+                        <div class="termoo-input-area" id="termoo-controls">
+                            <input type="text" id="termoo-input" class="termoo-input" maxlength="4" placeholder="SENHA">
+                            <button class="termoo-btn" onclick="submitTermooWord()">ENVIAR</button>
                         </div>
+                        <p id="termoo-feedback" style="font-size:16px; color:var(--text-gold); margin-top:5px; text-align:center;"></p>
                     </div>
-                    <p style="font-size:18px;">Nenhum jogo seria tão bom se não tivesse você como protagonista.</p>
-                    <p style="font-size:18px;">Ver você evoluir, passar de level a cada ano e enfrentar os desafios de cabeça erguida é o meu maior orgulho.</p>
-                    <p style="font-size:18px;">Que esse novo nível que você desbloqueia hoje traga missões incríveis e muito loot legendário.</p>
-                    <p style="color:var(--text-gold); text-align:center; margin-top:20px;">Serei para sempre a sua Player 2.<br>Feliz Aniversário!</p>
                 `
             }
         };
+
+        /* =========================================
+           SISTEMA LOGICIAL DO MINIJOGO TERMOO (PALAVRA: VIDA)
+        ========================================= */
+        const secretWord = "VIDA";
+        let attemptsCount = 0;
+        const totalMaxAttempts = 5;
+        let isTermooCleared = false;
+
+        function initializeTermooGrid() {
+            const board = document.getElementById('termoo-board');
+            if(!board) return;
+            board.innerHTML = "";
+            for (let r = 0; r < totalMaxAttempts; r++) {
+                const row = document.createElement('div');
+                row.className = 'termoo-row';
+                for (let c = 0; c < 4; c++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'termoo-cell';
+                    cell.id = `cell-${r}-${c}`;
+                    row.appendChild(cell);
+                }
+                board.appendChild(row);
+            }
+            attemptsCount = 0;
+        }
+
+        window.submitTermooWord = function() {
+            if(isTermooCleared) return;
+            const inputField = document.getElementById('termoo-input');
+            const feedbackText = document.getElementById('termoo-feedback');
+            const currentGuess = inputField.value.toUpperCase().trim();
+
+            if (currentGuess.length !== 4) {
+                feedbackText.innerText = "Insira uma palavra de 4 letras!";
+                return;
+            }
+
+            for (let i = 0; i < 4; i++) {
+                const cell = document.getElementById(`cell-${attemptsCount}-${i}`);
+                const character = currentGuess[i];
+                cell.innerText = character;
+
+                if (character === secretWord[i]) {
+                    cell.className = 'termoo-cell correct';
+                } else if (secretWord.includes(character)) {
+                    cell.className = 'termoo-cell present';
+                } else {
+                    cell.className = 'termoo-cell absent';
+                }
+            }
+
+            if (currentGuess === secretWord) {
+                isTermooCleared = true;
+                play8BitSFX('victory');
+                feedbackText.innerText = "PORTÕES ABERTOS! Sucesso Total.";
+                document.getElementById('termoo-controls').style.display = 'none';
+                
+                setTimeout(() => {
+                    displayVictoryEpilogue();
+                }, 1500);
+                return;
+            }
+
+            attemptsCount++;
+            inputField.value = "";
+            feedbackText.innerText = `Tentativas restantes: ${totalMaxAttempts - attemptsCount}`;
+
+            if (attemptsCount >= totalMaxAttempts) {
+                feedbackText.style.color = "red";
+                feedbackText.innerText = "Feitiço Falhou! Reiniciando matriz...";
+                setTimeout(() => {
+                    initializeTermooGrid();
+                    feedbackText.style.color = "var(--text-gold)";
+                    feedbackText.innerText = "";
+                }, 2000);
+            }
+        };
+
+        function displayVictoryEpilogue() {
+            document.getElementById('modal-title').innerHTML = "EPÍLOGO - GAME CLEARED";
+            document.getElementById('modal-content').innerHTML = `
+                <div style="display:flex; justify-content:center; margin-bottom: 20px;">
+                    <div class="polaroid-card" style="width: 220px;">
+                        <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=400&auto=format&fit=crop" alt="Foto do Casal">
+                        <p>Eu & Você ❤️</p>
+                    </div>
+                </div>
+                <p style="font-size:18px;">Nenhum jogo seria tão bom se não tivesse você como protagonista.</p>
+                <p style="font-size:18px;">Ver você evoluir, passar de level a cada ano e enfrentar os desafios de cabeça erguida é o meu maior orgulho.</p>
+                <p style="font-size:18px;">Que esse novo nível que você desbloqueia hoje traga missões incríveis e muito loot legendário.</p>
+                <p style="color:var(--text-gold); text-align:center; margin-top:20px;">Serei para sempre a sua Player 2.<br>Feliz Aniversário!</p>
+            `;
+        }
 
         /* =========================================
            SISTEMA DE DIÁLOGOS POKÉMON NO MAPA
@@ -826,14 +964,12 @@
         }
 
         /* =========================================
-           GERAÇÃO DO CENÁRIO E SAPINHOS (🐸)
+           GERAÇÃO DO CENÁRIO E SAPINHOS
         ========================================= */
-        let frogs = [];
         function generateDecor() {
             const container = document.getElementById('decor-container');
             const items = ['🌸', '🍄', '🪨', '🌲', '🌲', '🌿', '🐸'];
             const worldSize = 1500;
-            frogs = []; 
             
             const paths = [
                 {x: 150, y: 1300, w: 1050, h: 60},
@@ -870,8 +1006,6 @@
                 
                 if (char === '🐸') {
                    el.style.animation = 'bounce 2s infinite alternate ease-in-out';
-                   el.setAttribute('data-id', 'frog_' + i);
-                   frogs.push({id: 'frog_' + i, x: x, y: y});
                 }
                 
                 container.appendChild(el);
@@ -894,16 +1028,24 @@
         let keys = { w: false, a: false, s: false, d: false };
         let activePOI = null;
         let isModalOpen = false;
-        let lastFrogTriggedId = null;
-        let hasPassedOrigens = false; // Flag de controle para as instruções
+        let hasPassedOrigens = false; 
 
         window.addEventListener('keydown', e => {
             if(titleScreen.style.display !== 'none') return;
+            
+            // CORREÇÃO AQUI: Impede que a barra de espaço clique acidentalmente no botão de Mute ou Start focado
+            if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault();
+            }
+            
             if (e.key === 'w' || e.key === 'ArrowUp') keys.w = true;
             if (e.key === 'a' || e.key === 'ArrowLeft') keys.a = true;
             if (e.key === 's' || e.key === 'ArrowDown') keys.s = true;
             if (e.key === 'd' || e.key === 'ArrowRight') keys.d = true;
-            if (e.key === 'e' || e.key === ' ' || e.key === 'Enter') handleAction();
+            if (e.key === 'e' || e.key === ' ' || e.key === 'Enter') {
+                if(isModalOpen && document.getElementById('termoo-input') === document.activeElement) return;
+                handleAction();
+            }
         });
 
         window.addEventListener('keyup', e => {
@@ -952,7 +1094,6 @@
                 }
             }
 
-            // Oculta as instruções permanentemente caso o herói passe do ponto "Origens"
             if (!hasPassedOrigens && pX > 320) {
                 hasPassedOrigens = true;
                 helpBox.style.opacity = '0';
@@ -978,34 +1119,13 @@
                 }
             }
         }
-        
-        function checkFrogProximity() {
-            if (isModalOpen) return;
-            let found = null;
-            let cx = pX + pSize/2;
-            let cy = pY + pSize/2;
-
-            for (let frog of frogs) {
-                let dist = Math.hypot(cx - frog.x, cy - frog.y);
-                
-                if (dist < 80) { 
-                    found = frog;
-                    break;
-                }
-            }
-
-            if (found) {
-                if (found.id !== lastFrogTriggedId) {
-                   // play8BitSFX('frog');
-                   lastFrogTriggedId = found.id;
-                }
-            } else {
-                lastFrogTriggedId = null;
-            }
-        }
 
         function handleAction() {
-            if (isModalOpen) { closeModal(); return; }
+            if (isModalOpen) { 
+                if(activePOI && activePOI.id === 'epilogue' && !isTermooCleared) return;
+                closeModal(); 
+                return; 
+            }
             if (activePOI) { 
                 play8BitSFX('action');
                 openModal(activePOI.id); 
@@ -1018,7 +1138,6 @@
             isModalOpen = true;
             hideDialogue();
             
-            // Oculta a instrução ao interagir com a primeira casinha
             if(id === 'intro' && !hasPassedOrigens) {
                 hasPassedOrigens = true;
                 helpBox.style.opacity = '0';
@@ -1028,6 +1147,14 @@
             document.getElementById('modal-title').innerHTML = data.title;
             document.getElementById('modal-content').innerHTML = data.html;
             modalOverlay.style.display = 'flex';
+
+            if(id === 'epilogue') {
+                if(!isTermooCleared) {
+                    initializeTermooGrid();
+                } else {
+                    displayVictoryEpilogue();
+                }
+            }
         }
 
         function closeModal() {
@@ -1055,7 +1182,6 @@
                 }
 
                 checkProximity();
-                checkFrogProximity();
             }
 
             let vW = viewport.clientWidth;
