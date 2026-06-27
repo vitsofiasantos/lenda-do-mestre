@@ -805,14 +805,14 @@
             },
             family: {
                 title: "ÁLBUM DE FAMÍLIA",
-                popup: "Aqueles que mais sentem saudade.",
+                popup: "Aqueles que mais sentem saudades...",
                 html: `
-                    <p style="text-align:center; font-size: 18px; color: var(--text-gold); margin-bottom: 15px;">Suas raízes e a base de tudo</p>
+                    <p style="text-align:center; font-size: 18px; color: var(--text-gold); margin-bottom: 15px;">Para não esquecer o quanto você é admirado!</p>
                     <div class="friends-album">
-                        <div class="polaroid-card"><img src="https://i.imgur.com/PZpa5jd.png"><p>Família 1</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/18NhBuH.png"><p>Família 2</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/6nbovCb.png"><p>Família 3</p></div>
-                        <div class="polaroid-card"><img src="https://i.imgur.com/WebnSJA.png"><p>Família 4</p></div>
+                        <div class="polaroid-card"><img src="https://i.imgur.com/PZpa5jd.png"><p>A pessoa que se inspira em você.</p></div>
+                        <div class="polaroid-card"><img src="https://i.imgur.com/18NhBuH.png"><p>Aquela que te oferece colo desde o início.</p></div>
+                        <div class="polaroid-card"><img src="https://i.imgur.com/6nbovCb.png"><p>E também a mulher que construiu a sua base para que você pudesse realizar seus sonhos.</p></div>
+                        <div class="polaroid-card"><img src="https://i.imgur.com/WebnSJA.png"><p>Todos sentem o seu amor e torcem por você.</p></div>
                        
                     </div>
                 `
@@ -827,14 +827,14 @@
         const epilogueRealContent = `
             <div style="display:flex; justify-content:center; margin-bottom: 20px;">
                 <div class="polaroid-card" style="width: 220px;">
-                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=400&auto=format&fit=crop" alt="Foto do Casal">
+                    <img src="https://i.imgur.com/2YLUMA9.png" alt="Foto do Casal">
                     <p>Eu & Você ❤️</p>
                 </div>
             </div>
-            <p style="font-size:18px;">Nenhum jogo seria tão bom se não pudesse compartilhá-lo com você.</p>
+            <p style="font-size:18px;">Amo poder compartilhar esse jogo com você!</p>
             <p style="font-size:18px;">Ver você evoluir, pessoalmente e profisisonalmente, me fazem te admirar todos os dias.</p>
-            <p style="font-size:18px;">Que esse novo nível que você desbloqueia hoje traga missões incríveis.</p>
-            <p style="color:var(--text-gold); text-align:center; margin-top:20px;">Serei a sua Player 2 nesse jogo da Vida.<br>Feliz Aniversário!</p>`;
+            <p style="font-size:18px;">Que esse novo nível que você desbloqueia hoje te traga missões incríveis.</p>
+            <p style="color:var(--text-gold); text-align:center; margin-top:20px;">Serei a sua Player 2.<br>Feliz aniversáriom meu bem!</p>`;
 
         /* =========================================
            SISTEMA LOGICIAL DO MINIJOGO TERMOO (PALAVRA: VIDA)
@@ -1176,7 +1176,7 @@
                     termooRow = 0; termooCol = 0; termooOver = false;
                     document.getElementById('modal-content').innerHTML = buildTermoo();
                 } else {
-                    document.getElementById('modal-title').innerHTML = "EPÍLOGO - GAME CLEARED";
+                    document.getElementById('modal-title').innerHTML = "GAME CLEARED";
                     document.getElementById('modal-content').innerHTML = epilogueRealContent;
                 }
             } else {
